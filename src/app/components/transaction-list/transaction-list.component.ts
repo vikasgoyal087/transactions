@@ -47,10 +47,6 @@ export class TransactionListComponent implements OnInit {
     this.totalSaving = await this.transactionService.fetchTotalSaving();
   }
 
-  setDeleteId(id: number) {
-    this.deleteId = id;
-  }
-
   deleteRecord() {
     this.transactionService.deleteRecord(this.deleteId).then((response: any) => {
       this.getTotalSavings();

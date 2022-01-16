@@ -15,7 +15,7 @@
             </h5>
         </div>
         <div class="col-2">
-            <select class="form-control" id="noOfRecord" [(ngModel)]="itemPerPage">
+            <select class="form-control" id="noOfRecord" [(ngModel)]="itemPerPage" (change)="page = 1">
                 <option>5</option>
                 <option>10</option>
                 <option>25</option>
@@ -45,8 +45,8 @@
                     <td>{{(itemPerPage * (page - 1)) + i + 1}}</td>
                     <td>{{item.name}}</td>
                     <td>{{item.amount}}</td>
-                    <td>{{item.description}}</td>
-                    <td>{{item.type}}</td>
+                    <td [title]="item.description">{{item.description.substring(0, 60) +(item.description.length > 60 ? '...' : '')}}</td>
+                    <td [class]="item.type =='Expense' ? 'text-warning' : 'text-success'">{{item.type}}</td>
                     <td>{{item.date}}</td>
                     <td><a href="#" class="btn btn-sm btn-danger delete-conf" (click)="deleteId = item.id"
                             data-toggle="modal" data-target="#deleteTransactionModal">Delete</a></td>

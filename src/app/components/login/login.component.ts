@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if(sessionStorage.getItem("loggedin") && sessionStorage.getItem("loggedin") == "1"){
-      this.router.navigate(['transctions']);
+      this.router.navigate(['transactions']);
     }
   }
 
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     var password = this.objLogin.password;
     if (username == "admin" && password == "admin") {
       sessionStorage.setItem("loggedin", "1");
-      this.router.navigate(['transctions']);
+      this.router.navigate(['transactions']);
     }else{
       this.error = true;
     }
