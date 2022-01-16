@@ -1,0 +1,92 @@
+<div class="container">
+    <div class="row mt-2">
+        <div class="col-6">
+            <h1>Transactions</h1>
+        </div>
+        <div class="col-6">
+            <button class="btn btn-primary float-right" (click)="logout()">Logout</button>
+            <button class="btn btn-primary float-right mr-2" data-toggle="modal" data-target="#addTransactionModal">Add
+                Transaction</button>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-10">
+            <h5 class="text-success">Total Saving : <span class="total-saving font-weight-bold">{{totalSaving | number:'1.2-2'}}</span>
+            </h5>
+        </div>
+        <div class="col-2">
+            <select class="form-control" id="noOfRecord" [(ngModel)]="itemPerPage">
+                <option>5</option>
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+                <option>100</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="alert alert-success w-100" *ngIf="success" role="alert">
+            {{success}}
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of transactionData | paginate: { id: 'server1', itemsPerPage: itemPerPage, currentPage: page, totalItems: totalItems }; index as i;">
+                    <td>{{(itemPerPage * (page - 1)) + i + 1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.amount}}</td>
+                    <td>{{item.description}}</td>
+                    <td>{{item.type}}</td>
+                    <td>{{item.date}}</td>
+                    <td><a href="#" class="btn btn-sm btn-danger delete-conf" (click)="deleteId = item.id"
+                            data-toggle="modal" data-target="#deleteTransactionModal">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <pagination-controls [id]="'server1'" (pageChange)="page = $event"></pagination-controls>
+        </nav>
+    </div>
+</div>
+<div class="modal fade" id="addTransactionModal" tabindex="-1" role="dialog" aria-labelledby="addTransactionModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="alert alert-danger" *ngIf="error" role="alert">
+            {{error}}
+        </div>
+        <app-transaction-add></app-transaction-add>
+    </div>
+</div>
+<div class="modal fade" id="deleteTransactionModal" tabindex="-1" role="dialog"
+    aria-labelledby="deleteTransactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addTransactionModalLabel">Delete Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="alert alert-danger" *ngIf="error" role="alert">
+                    {{error}}
+                </div>
+                <p>Are you sure you want to delete this record?</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a class="btn btn-light mr-3" data-dismiss="modal">No</a>
+                <input type="button" class="btn btn-success delete-record" value="Yes" (click)="deleteRecord()">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<form class="addupdate-transcrion" (submit)="addTransaction()">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="addTransactionModalLabel">Add Transaction</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="nameInput">Name</label>
+                <input type="text" class="form-control" [ngClass]="errors.name ? 'is-invalid': ''"
+                    id="nameInput" placeholder="Name" name="name" required autocomplete="off"
+                    [(ngModel)]="transaction.name" (change)="validate()">
+                <div class="invalid-feedback">{{errors.name}}</div>
+            </div>
+            <div class="form-group">
+                <label for="amountInput">Amount</label>
+                <input type="number" class="form-control" [ngClass]="errors.amount ? 'is-invalid': ''"
+                    id="amountInput" placeholder="Amount" name="amount" required autocomplete="off"
+                    [(ngModel)]="transaction.amount" (change)="validate()">
+                <div class="invalid-feedback">{{errors.amount}}</div>
+            </div>
+            <div class="form-group">
+                <label for="descriptionInput">Description</label>
+                <textarea class="form-control" [ngClass]="errors.description ? 'is-invalid': ''"
+                    id="descriptionInput" rows="3" name="description" placeholder="Description"
+                    [(ngModel)]="transaction.description" (change)="validate()"></textarea>
+                <div class="invalid-feedback">{{errors.description}}</div>
+            </div>
+            <div class="form-group">
+                <label for="type">Type</label>
+                <select class="form-control" [ngClass]="errors.type ? 'is-invalid': ''" id="typeInput"
+                    name="type" required [(ngModel)]="transaction.type" (change)="validate()">
+                    <option value="">Select Type</option>
+                    <option>Income</option>
+                    <option>Expense</option>
+                </select>
+                <div class="invalid-feedback">{{errors.type}}</div>
+            </div>
+            <div class="form-group">
+                <label for="dateInput">Date</label>
+                <input type="date" class="form-control" [ngClass]="errors.date ? 'is-invalid': ''"
+                    id="dateInput" name="date" required pattern="dd-mm-yyyy" autocomplete="off"
+                    [(ngModel)]="transaction.date" (change)="validate()">
+                <div class="invalid-feedback">{{errors.date}}</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a class="btn btn-light" data-dismiss="modal">Close</a>
+            <input type="submit" class="btn btn-primary" value="Save">
+        </div>
+    </div>
+</form>
