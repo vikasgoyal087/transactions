@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TransactionLocalStorageService } from 'src/app/service/transaction-local-storage.service';
 import { TransactionServiceService } from 'src/app/service/transaction-service.service';
 declare var $: any;
 
@@ -19,10 +20,15 @@ export class TransactionListComponent implements OnInit {
   totalItems: number = 0;
   page: number = 1;
   itemPerPage: number = 5;
-  constructor(private transactionService: TransactionServiceService, private router: Router) {
+  supports_webSQL: boolean = true;
+  transactionService: any;
+  constructor(private txServiceWeb: TransactionServiceService, private txServiceLocal: TransactionLocalStorageService, private router: Router) {
+    
   }
 
   ngOnInit(): void {
+    this.supports_webSQL = ("openDatabase" in window);
+    this.transactionService = (this.supports_webSQL) ? this.txServiceWeb : this.txServiceLocal;
     this.getList();
     this.getTotalSavings();
   }

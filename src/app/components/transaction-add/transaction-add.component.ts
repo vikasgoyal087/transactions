@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TransactionLocalStorageService } from 'src/app/service/transaction-local-storage.service';
 import { TransactionServiceService } from 'src/app/service/transaction-service.service';
 import { TransactionListComponent } from '../transaction-list/transaction-list.component';
 declare var $: any;
@@ -9,14 +10,18 @@ declare var $: any;
   styleUrls: ['./transaction-add.component.scss']
 })
 export class TransactionAddComponent implements OnInit {
-
+  txService: any;
   transaction: any = {};
   errors: any = {};
-  constructor(private transactionService: TransactionServiceService, private transactionList: TransactionListComponent) {
-
+  supports_webSQL: boolean = true;
+  transactionService: any;
+  constructor(private txServiceWeb: TransactionServiceService, private txServiceLocal: TransactionLocalStorageService, private transactionList: TransactionListComponent) {
+    
   }
 
   ngOnInit(): void {
+    this.supports_webSQL = ("openDatabase" in window);
+    this.transactionService = (this.supports_webSQL) ? this.txServiceWeb : this.txServiceLocal;
   }
 
   validate(){

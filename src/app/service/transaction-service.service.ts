@@ -13,10 +13,12 @@ export class TransactionServiceService {
   totalExpense: number = 0;
 
   constructor() {
-    this.db = (<any>window).openDatabase('transactiondb', '1.0', 'Transactions DB', 2 * 1024 * 1024);
-    this.createTable();
-    this.fetchLastRecord();
-    this.fetchTotalSaving();
+    if("openDatabase" in window){
+      this.db = (<any>window).openDatabase('transactiondb', '1.0', 'Transactions DB', 2 * 1024 * 1024);
+      this.createTable();
+      this.fetchLastRecord();
+      this.fetchTotalSaving();
+    }
   }
 
   createTable() {
